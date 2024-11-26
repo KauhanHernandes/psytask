@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema MVC - Login e Cadastro</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1> Plataforma PsyTask </h1>
+            <p>Seja bem-vindo!</p>
+        </header>
+
+        <main class="main">
+            <div class="tabs">
+                <button id="loginTab" class="tab active">Login</button>
+                <button id="registerTab" class="tab">Cadastro</button>
+            </div>
+
+            <section id="loginSection" class="form-section active-section">
+                <h2>Login</h2>
+                <form id="loginForm" class="form">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                    <input type="password" id="loginSenha" placeholder="Senha" required>
+                    <button type="submit" class="btn">Entrar</button>
+                </form>
+            </section>
+
+            <section id="registerSection" class="form-section">
+                <h2>Cadastro</h2>
+                <form id="registerForm" class="form">
+                    <input type="text" id="nome" placeholder="Nome" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="senha" placeholder="Senha" required>
+                    <select id="role">
+                        <option value="gestor">Gestor</option>
+                        <option value="professor">Professor</option>
+                        <option value="aluno">Aluno</option>
+                    </select>
+                    <button type="submit" class="btn">Cadastrar</button>
+                </form>
+            </section>
+        </main>
+
+        <div id="feedback-message" class="feedback-message hidden"></div>
+
+        <footer class="footer">
+            <p>&copy; 2024 PsyTask. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+    <script src="./js/scripts.js"></script>
+</body>
+</html>

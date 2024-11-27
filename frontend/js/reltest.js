@@ -48,7 +48,7 @@ function handleLogout() {
 function displayRelatorios() {
     const relatorios = JSON.parse(localStorage.getItem('relatorios')) || [];
     if (relatoriosList) {
-        relatoriosList.innerHTML = ''; // Limpa lista antes de adicionar
+        relatoriosList.innerHTML = '';
         relatorios.forEach((relatorio) => {
             const li = document.createElement('li');
             li.classList.add('report-item');

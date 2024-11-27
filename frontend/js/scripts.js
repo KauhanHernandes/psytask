@@ -1,3 +1,8 @@
+// URL base dinâmica (local ou produção)
+const baseURL = window.location.hostname === 'localhost'
+    ? 'http://localhost:3000'  
+    : 'https://psytask.vercel.app'; 
+
 // Função para exibir mensagens de feedback com animação
 function showFeedbackMessage(message, isError = false) {
     const feedbackMessage = document.getElementById('feedback-message');
@@ -70,7 +75,7 @@ document.getElementById('registerForm')?.addEventListener('submit', async (e) =>
     try {
         toggleButtonLoadingState(registerButton, true);
 
-        const response = await fetch('http://localhost:3000/auth/register', {
+        const response = await fetch(`${baseURL}/auth/register`, { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -113,7 +118,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
     try {
         toggleButtonLoadingState(loginButton, true);
 
-        const response = await fetch('http://localhost:3000/auth/login', {
+        const response = await fetch(`${baseURL}/auth/login`, {  
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

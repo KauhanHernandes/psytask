@@ -11,6 +11,12 @@ const app = express();
 // Middleware para permitir CORS
 app.use(cors());
 
+app.use(cors({
+    origin: 'https://psytask.vercel.app', // Permitir apenas requisições dessa URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'] // Cabeçalhos permitidos
+}));
+
 // Middleware para parsear JSON no corpo da requisição
 app.use(bodyParser.json());
 

@@ -1,7 +1,8 @@
 // URL base dinâmica (local ou produção)
 const baseURL = window.location.hostname === 'localhost'
     ? 'http://localhost:3000'  
-    : 'https://psytask.vercel.app'; 
+    : 'https://psytask-kauhanhernandes-projects.vercel.app'
+    ; 
 
 // Função para exibir mensagens de feedback com animação
 function showFeedbackMessage(message, isError = false) {

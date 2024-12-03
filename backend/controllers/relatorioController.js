@@ -9,7 +9,6 @@ const criarRelatorio = (req, res) => {
         return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
     }
 
-    // Valida se o aluno_id existe no banco antes de criar o relatório
     Relatorio.validarAluno(aluno_id, (err, aluno) => {
         if (err) {
             console.error('Erro ao verificar aluno:', err);
@@ -20,7 +19,6 @@ const criarRelatorio = (req, res) => {
             return res.status(404).json({ message: 'Aluno não encontrado' });
         }
 
-        // Criação do relatório
         Relatorio.criarRelatorio(aluno_id, titulo, conteudo, (err, result) => {
             if (err) {
                 console.error('Erro ao criar relatório:', err);
@@ -46,7 +44,6 @@ const listarRelatorios = (req, res) => {
 const buscarRelatorio = (req, res) => {
     const { id } = req.params;
 
-    // Verificação básica do ID
     if (!id) {
         return res.status(400).json({ message: 'ID do relatório é obrigatório' });
     }

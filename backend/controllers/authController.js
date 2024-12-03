@@ -45,27 +45,23 @@ exports.register = async (req, res) => {
 exports.loginUser = async (req, res) => {
     const { email, senha } = req.body;
 
-    // Verificando se os campos obrigatórios estão presentes
     if (!email || !senha) {
         return res.status(400).json({ message: 'Email e senha são obrigatórios!' });
     }
 
     try {
-        // Consultando o usuário pelo e-mail
         const [user] = await pool.query('SELECT * FROM usuarios WHERE email = ?', [email]);
 
         if (user.length === 0) {
             return res.status(404).json({ message: 'Usuário não encontrado!' });
         }
 
-        // Verificando se a senha é válida
         const validPassword = await bcrypt.compare(senha, user[0].senha);
 
         if (!validPassword) {
             return res.status(401).json({ message: 'Senha incorreta!' });
         }
 
-        // Retornando uma resposta de sucesso com os dados do usuário, incluindo o role_id
         res.status(200).json({
             message: 'Login bem-sucedido!',
             user: {

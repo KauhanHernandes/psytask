@@ -19,12 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const userName = localStorage.getItem('userName') || 'Visitante';
 
     // Atualiza nome do usuário ou redireciona se necessário
-    userNameElement.textContent = userName;
-    if (userName === 'Visitante') {
-        alert(ERROR_MESSAGES.loginRequired);
-        window.location.href = 'login.html';
-        return;
-    }
+
 
     // Configura botão de logout e oculta link de login
     if (logoutBtn) {

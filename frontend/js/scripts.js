@@ -1,8 +1,7 @@
 // URL base dinâmica (local ou produção)
 const baseURL = window.location.hostname === 'localhost'
-    ? 'http://localhost:3000'  
-    : 'https://psytask-kauhanhernandes-projects.vercel.app'
-    ; 
+    ? 'http://localhost:3000'
+    : ''; 
 
 // Função para exibir mensagens de feedback com animação
 function showFeedbackMessage(message, isError = false) {
@@ -11,7 +10,6 @@ function showFeedbackMessage(message, isError = false) {
 
     feedbackMessage.textContent = message;
 
-    // Define a classe de erro ou sucesso
     feedbackMessage.classList.remove('error', 'hidden');
     if (isError) {
         feedbackMessage.classList.add('error');
@@ -19,10 +17,8 @@ function showFeedbackMessage(message, isError = false) {
         feedbackMessage.classList.remove('error');
     }
 
-    // Mostra a mensagem
     feedbackMessage.classList.add('show');
 
-    // Remove após 3 segundos
     setTimeout(() => {
         feedbackMessage.classList.remove('show');
         feedbackMessage.classList.add('hidden');
@@ -105,45 +101,19 @@ document.getElementById('registerForm')?.addEventListener('submit', async (e) =>
     }
 });
 
-// Evento de login do formulário
-document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+// Evento de login do formulário (sem autenticação)
+document.getElementById('loginForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const email = document.getElementById('loginEmail');
     const senha = document.getElementById('loginSenha');
-    const loginButton = document.querySelector('#loginForm .btn');
 
-    // Validação simples
+    // Validação simples (apenas verificando se os campos estão preenchidos)
     if (!validateForm([email, senha])) return;
 
-    try {
-        toggleButtonLoadingState(loginButton, true);
-
-        const response = await fetch(`${baseURL}/auth/login`, {  
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email.value.trim(),
-                senha: senha.value.trim(),
-            }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            showFeedbackMessage('Login bem-sucedido!');
-            window.location.href = '/frontend/reltest.html';
-        } else {
-            showFeedbackMessage(data.message || 'Erro no login.', true);
-        }
-    } catch (error) {
-        console.error(error);
-        showFeedbackMessage('Erro na conexão com o servidor.', true);
-    } finally {
-        toggleButtonLoadingState(loginButton, false);
-    }
+    // Redireciona diretamente para a página sem autenticação
+    showFeedbackMessage('Login bem-sucedido!');
+    window.location.href = 'reltest.html';
 });
 
 // Alternância entre as abas de login e registro

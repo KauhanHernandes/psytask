@@ -9,7 +9,6 @@ const validarAluno = (aluno_id, callback) => {
             return callback(err);
         }
 
-        // Verifica se o aluno existe
         const alunoExiste = results.length > 0 ? results[0] : null;
         callback(null, alunoExiste);
     });
@@ -58,7 +57,6 @@ const buscarRelatorio = (id, callback) => {
             return callback(err);
         }
 
-        // Verifica se o relatório foi encontrado
         const relatorio = results.length > 0 ? results[0] : null;
         callback(null, relatorio);
     });

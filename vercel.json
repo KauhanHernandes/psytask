@@ -1,0 +1,48 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "server.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/relatorios/criar",
+        "methods": ["POST"],
+        "dest": "/server.js"
+      },
+      {
+        "src": "/api/relatorios",
+        "methods": ["GET"],
+        "dest": "/server.js"
+      },
+      {
+        "src": "/api/relatorios/:id",
+        "methods": ["GET"],
+        "dest": "/server.js"
+      },
+      {
+        "src": "/auth/login",
+        "methods": ["POST"],
+        "dest": "/server.js"
+      },
+      {
+        "src": "/auth/register",
+        "methods": ["POST"],
+        "dest": "/server.js"
+      },
+      {
+        "src": "/",
+        "dest": "/server.js"
+      }
+    ],
+    "env": {
+      "DB_HOST": "seu_host_do_banco_de_dados",
+      "DB_USER": "seu_usuario",
+      "DB_PASS": "sua_senha",
+      "DB_NAME": "seu_banco_de_dados",
+      "SERVER_PORT": "3000"
+    }
+  }
+  

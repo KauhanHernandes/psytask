@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 const relatorioRoutes = require('./routes/relatorioRoutes');
@@ -8,14 +7,13 @@ require('dotenv').config();
 
 const app = express();
 
-// Middleware para permitir CORS
-app.use(cors());
-
-app.use(cors({
-    origin: 'https://psytask.vercel.app', // Permitir apenas requisições dessa URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos
-    allowedHeaders: ['Content-Type', 'Authorization'] // Cabeçalhos permitidos
-}));
+// Middleware para permitir CORS de qualquer origem (desabilitado)
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*'); 
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); 
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 
 // Middleware para parsear JSON no corpo da requisição
 app.use(bodyParser.json());

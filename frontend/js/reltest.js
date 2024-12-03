@@ -6,60 +6,49 @@ const errorMessage = document.getElementById('error-message');
 const userNameElement = document.getElementById('user-name');
 const loginLink = document.getElementById('login-link');
 
-// Configurações globais
-const API_URL = 'http://localhost:3000/api/relatorios/criar';
 const ERROR_MESSAGES = {
-    loginRequired: 'Você precisa estar logado para acessar essa página.',
-    creationError: 'Erro ao criar relatório. Verifique sua conexão ou tente novamente.',
     fieldsRequired: 'Todos os campos são obrigatórios!',
 };
 
-// Verifica login e inicializa página
+// Inicializa a página
 document.addEventListener('DOMContentLoaded', () => {
     const userName = localStorage.getItem('userName') || 'Visitante';
+    userNameElement.textContent = userName;
 
-    // Atualiza nome do usuário ou redireciona se necessário
-
-
-    // Configura botão de logout e oculta link de login
     if (logoutBtn) {
         logoutBtn.style.display = 'inline-block';
         logoutBtn.addEventListener('click', handleLogout);
     }
     if (loginLink) loginLink.style.display = 'none';
-
-    // Exibe relatórios armazenados
-    displayRelatorios();
 });
 
-// Função: Logout do usuário
+// Função: Logout
 function handleLogout() {
-    localStorage.removeItem('userName');
-    alert('Você foi desconectado.');
-    window.location.href = 'login.html';
+    const body = document.body;
+
+    body.classList.add('fade-out');
+
+    setTimeout(() => {
+        localStorage.removeItem('userName');
+        window.location.href = 'login.html';
+    }, 1000);
 }
 
-// Função: Exibir relatórios na lista
-function displayRelatorios() {
-    const relatorios = JSON.parse(localStorage.getItem('relatorios')) || [];
-    if (relatoriosList) {
-        relatoriosList.innerHTML = '';
-        relatorios.forEach((relatorio) => {
-            const li = document.createElement('li');
-            li.classList.add('report-item');
-            li.innerHTML = `
-                <h3>${relatorio.titulo}</h3>
-                <p><strong>ID do Relatório:</strong> ${relatorio.aluno_id}</p>
-                <p><strong>Conteúdo:</strong> ${relatorio.conteudo}</p>
-            `;
-            relatoriosList.appendChild(li);
-        });
-    }
+// Função: Adicionar relatório ao DOM
+function addRelatorioToList({ aluno_id, titulo, conteudo }) {
+    const li = document.createElement('li');
+    li.classList.add('report-item');
+    li.innerHTML = `
+        <h3>${titulo}</h3>
+        <p><strong>ID do Aluno:</strong> ${aluno_id}</p>
+        <p><strong>Conteúdo:</strong> ${conteudo}</p>
+    `;
+    relatoriosList.appendChild(li);
 }
 
 // Função: Criar relatório
 if (createForm) {
-    createForm.addEventListener('submit', async (e) => {
+    createForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         const aluno_id = document.getElementById('aluno_id').value.trim();
@@ -72,32 +61,24 @@ if (createForm) {
             return;
         }
 
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ aluno_id, titulo, conteudo }),
-            });
+        addRelatorioToList({ aluno_id, titulo, conteudo });
 
-            const data = await response.json();
-            if (response.ok) {
-                alert('Relatório criado com sucesso!');
-                createForm.reset();
+        displaySuccessMessage(aluno_id, titulo);
 
-                // Atualiza localStorage com novo relatório
-                const relatorios = JSON.parse(localStorage.getItem('relatorios')) || [];
-                relatorios.push({ aluno_id, titulo, conteudo });
-                localStorage.setItem('relatorios', JSON.stringify(relatorios));
+        createForm.reset();
+    });
+}
 
-                // Redireciona para página de visualização
-                window.location.href = 'visualizar-relatorios.html';
-            } else {
-                throw new Error(data.message || 'Erro desconhecido');
-            }
-        } catch (error) {
-            console.error(error);
-            errorMessage.textContent = `Erro: ${error.message || ERROR_MESSAGES.creationError}`;
-            errorMessage.style.color = 'red';
-        }
+// Função: Exibir mensagem de sucesso
+function displaySuccessMessage(aluno_id, titulo) {
+    const successAlert = document.getElementById('create-success');
+    successAlert.querySelector('#new-report-id').textContent = aluno_id;
+    successAlert.querySelector('#new-report-title').textContent = titulo;
+
+    successAlert.classList.remove('hidden');
+
+    const closeButton = document.getElementById('close-create-success');
+    closeButton.addEventListener('click', () => {
+        successAlert.classList.add('hidden');
     });
 }

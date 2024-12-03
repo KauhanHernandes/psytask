@@ -4,6 +4,7 @@ Thumbs.db
 
 # Ignorar arquivos de log
 *.log
+.env
 
 # Ignorar dependências de Node.js
 node_modules/
